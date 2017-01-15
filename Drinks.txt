@@ -1,0 +1,10 @@
+ID : 1 | Produs : Coca-Cola | Nr Produse : 13 | Pret Produse : 3.5
+		*	*	*	*	*	*	*	*	*	*	*	*		
+ID : 2 | Produs : Fanta | Nr Produse : 16 | Pret Produse : 3.5
+		*	*	*	*	*	*	*	*	*	*	*	*		
+ID : 3 | Produs : Sprite | Nr Produse : 17 | Pret Produse : 3.5
+		*	*	*	*	*	*	*	*	*	*	*	*		
+ID : 4 | Produs : Apa Plata Dorna | Nr Produse : 20 | Pret Produse : 3
+		*	*	*	*	*	*	*	*	*	*	*	*		
+ID : 5 | Produs : Apa Minerala Dorna | Nr Produse : 22 | Pret Produse : 3
+		*	*	*	*	*	*	*	*	*	*	*	*		

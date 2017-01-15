@@ -1,9 +1,10 @@
-#include<iostream>
+﻿#include<iostream>
 #include<conio.h>
 #include<numeric>
 #include<string.h>
 #include<math.h>
 #include<algorithm>
+#include<fstream>
 
 using namespace std;
 
@@ -89,6 +90,7 @@ public:
 	{
 		this->id = d.id;
 		this->pret = d.pret;
+		this->stoc_initial = d.stoc_initial;
 		this->denumire = new char[strlen(d.denumire) + 1];
 		strcpy(this->denumire, d.denumire);
 	}
@@ -96,6 +98,7 @@ public:
 	{
 		this->id = d.id;
 		this->pret = d.pret;
+		this->stoc_initial = d.stoc_initial;
 		if (this->denumire != NULL)
 			delete[]this->denumire;
 		this->denumire = new char[strlen(d.denumire) + 1];
@@ -104,7 +107,32 @@ public:
 	}
 	friend ostream&operator<<(ostream&out, Drink dd);
 	friend istream&operator>>(istream&in, Drink dd);
+	friend ofstream&operator<<(ofstream&out, Drink dd);
+	friend ifstream&operator>>(ifstream&in, Drink dd);
 };
+
+ofstream&operator<<(ofstream&out, Drink dd){
+	out.open("Drinks.txt", ios::app);
+	if (out.is_open()){
+		out << "ID : " << dd.id << " | ";
+		out << "Produs : " << dd.denumire <<" | " ;
+		out << "Nr Produse : " << dd.stoc_initial << " | ";
+		out << "Pret Produse : " << dd.pret  << endl;
+		out.close();
+	}
+	return out;
+}
+ifstream&operator>>(ifstream&in, Drink dd){
+	in.open("Drinks.txt", ios::ate);
+	if (in.is_open()){
+		in >> dd.id;
+		in >> dd.denumire;
+		in >> dd.stoc_initial;
+		in >> dd.pret;
+		in.close();
+	}
+	return in;
+}
 
 ostream&operator<<(ostream&out, Drink dd)
 {
@@ -283,13 +311,8 @@ public:
 		if (this->tip_bani != NULL)
 			delete[]this->tip_bani;
 		for (int i; i = 0;i++)
-	/*	if (this->valoare_bani = i)
-		{
-			this->tip_bani = "Bancnote";
-		}*/
-		this->tip_bani = "Monede";
-		//this->tip_bani = new char[strlen(tip_bani) + 1];
-		//strcpy(this->tip_bani, tip_bani);
+		this->tip_bani = new char[strlen(tip_bani) + 1];
+		strcpy(this->tip_bani, tip_bani);
 	}
 	void setValoare_banc(int valoare_banc)
 	{
@@ -357,12 +380,7 @@ void vanzare(Livrare&livr, Bani&valoaref, Drink&d, Tipuri_bani&T)
 	Tipuri_bani T2("monede", 0.5, 1, 0.3);
 	float pretul, diferenta, cantitatea;
 	int bancnote, diferenta_bancnote, total, monede_introduse, diferenta_monede;
-//	cout << bancnote << endl;
-	//bancnote = livr.getPret();
-	float monede; //= T.getValoare_bani();
-	/*monede = livr.getPret();*/
-
-//	cout << bancnote << endl;
+	float monede;
 	if (livr.getPret() > 0 && d.getStoc() > 0)
 	{
 		std::cout << "Va rugam alegeti cantitatea dorita :";
@@ -378,6 +396,12 @@ void vanzare(Livrare&livr, Bani&valoaref, Drink&d, Tipuri_bani&T)
 		std::cout << "Pretul total este : " << pretul << " lei."<<endl;
 		cout << "Cate bancnote de 1 leu doriti sa inserati :" ;
 		cin >> total;
+		bancnote = total;
+		if (total > pretul)
+		{
+			std::cout << "Va rugam sa inserati maxim " << pretul << " lei" << endl;
+			return;
+		}
 		bancnote = total;
 		monede = (pretul - bancnote)*2;
 		if (bancnote > 0 )
@@ -424,6 +448,11 @@ void vanzare(Livrare&livr, Bani&valoaref, Drink&d, Tipuri_bani&T)
 			std::cout << "\nSe livreaza produsul. Multumim!" << endl << endl;
 			d.setStoc(scade_stoc);
 			std::cout << "Produse ramase in stoc: " << d.getStoc() << endl << endl;
+			if (pretul > cantitatea*livr.getPret())
+			{
+				std::cout << "Se returneaza restul : " << pretul - cantitatea*livr.getPret() << " lei." << endl;
+			}
+			
 		}
 		else {
 			std::cout << "Suma insuficienta. Se returneaza banii introdusi." << endl;
@@ -439,8 +468,8 @@ void main()
 {
 	
 	Tipuri_bani T;
-	//Tipuri_bani Tip_B2("Monede", .5, 10);
 	Bani banii;
+	Drink d(0, 0, 0, "Bautura");
 	Drink d1(1, 15, 3.5, "Coca-Cola");
 	Drink d2(2, 16, 3.5, "Fanta");
 	Drink d3(3, 17, 3.5, "Sprite");
@@ -483,12 +512,24 @@ void main()
 		cout << "Introduceti numarul produsului dorit: ";
 		cin >> optiune;
 	}
-	_getch();
-
-
-	/*
-	testam modificare
-	
-	
-	*/
+	ifstream Drinka;
+	Drinka >> d1;
+	ofstream Drinkaa;
+	Drinkaa << d1;
+	ifstream Drinkb;
+	Drinkb >> d2;
+	ofstream Drinkbb;
+	Drinkbb << d2;
+	ifstream Drinkc;
+	Drinkc >> d3;
+	ofstream Drinkcc;
+	Drinkcc << d3;
+	ifstream Drinkd;
+	Drinkd >> d4;
+	ofstream Drinkdd;
+	Drinkdd << d4;
+	ifstream Drinke;
+	Drinke >> d5;
+	ofstream Drinkee;
+	Drinkee << d5<<endl;
 }
