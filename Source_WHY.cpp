@@ -462,4 +462,11 @@ void main()
 		cin >> optiune;
 	}
 	_getch();
+
+
+	/*
+	testam modificare
+	
+	
+	*/
 }
