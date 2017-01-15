@@ -384,7 +384,7 @@ void vanzare(Livrare&livr, Bani&valoaref, Drink&d, Tipuri_bani&T)
 		{
 			std::cout << "Introduceti " << total << " lei in " << T1.getTip_bani() << " : ";
 			std::cin >> bancnote;
-			if (bancnote >= total)
+			if (bancnote > total)
 			{
 				valoaref.accept(bancnote);
 				std::cout << "Se returneaza " << bancnote - total << " " << T1.getTip_bani() << endl;
@@ -424,8 +424,6 @@ void vanzare(Livrare&livr, Bani&valoaref, Drink&d, Tipuri_bani&T)
 			std::cout << "\nSe livreaza produsul. Multumim!" << endl << endl;
 			d.setStoc(scade_stoc);
 			std::cout << "Produse ramase in stoc: " << d.getStoc() << endl << endl;
-			if (pretul > cantitatea*livr.getPret())
-				std::cout << "Se returneaza restul : " << pretul - cantitatea*livr.getPret() << " lei" << endl << endl;
 		}
 		else {
 			std::cout << "Suma insuficienta. Se returneaza banii introdusi." << endl;
