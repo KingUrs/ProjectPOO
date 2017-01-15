@@ -356,8 +356,7 @@ void vanzare(Livrare&livr, Bani&valoaref, Drink&d, Tipuri_bani&T)
 	Tipuri_bani T1("bancnote", 10, 1, 10);
 	Tipuri_bani T2("monede", 0.5, 1, 0.3);
 	float pretul, diferenta, cantitatea;
-	int bancnote;// = T.getValoare_banc();
-	
+	int bancnote, diferenta_bancnote, total, monede_introduse, diferenta_monede;
 //	cout << bancnote << endl;
 	//bancnote = livr.getPret();
 	float monede; //= T.getValoare_bani();
@@ -376,18 +375,43 @@ void vanzare(Livrare&livr, Bani&valoaref, Drink&d, Tipuri_bani&T)
 			return;
 		}
 		pretul = cantitatea*livr.getPret();
-		std::cout << "Pretul total este : " << pretul << " : ";
-		std::cin >> pretul;
-		T.setValoare_banc(pretul);
-		bancnote = T.getValoare_banc();
-		monede = pretul - bancnote;
-		if (bancnote > 0 && monede > 0)
+		std::cout << "Pretul total este : " << pretul << " lei."<<endl;
+		cout << "Cate bancnote de 1 leu doriti sa inserati :" ;
+		cin >> total;
+		bancnote = total;
+		monede = (pretul - bancnote)*2;
+		if (bancnote > 0 )
 		{
-			std::cout << "Introduceti " << bancnote << " lei in " << T1.getTip_bani() << " : ";
+			std::cout << "Introduceti " << total << " lei in " << T1.getTip_bani() << " : ";
 			std::cin >> bancnote;
-			std::cout << "Introduceti " << pretul - bancnote << " " << T2.getTip_bani();
-			std::cin >> monede;
-		}//astva e ifu pe care nu il ia. 
+			if (bancnote >= total)
+			{
+				valoaref.accept(bancnote);
+				std::cout << "Se returneaza " << bancnote - total << " " << T1.getTip_bani() << endl;
+			}
+			if (bancnote<total)
+			{
+				std::cout << "Va rugam mai introduceti " << total - bancnote << " " << T1.getTip_bani()<<" : ";
+				std::cin >> diferenta_bancnote;
+			}
+			if (monede > 0){
+				std::cout << "Introduceti " << monede<<" "<<T2.getTip_bani()<<" : ";
+				std::cin >> monede_introduse;
+				if (monede_introduse >= monede)
+				{
+					valoaref.accept(monede_introduse);
+					if (monede_introduse > monede)
+						std::cout << "Se returneaza restul : " << monede_introduse - monede <<" "<<T2.getTip_bani()<< "( " 
+						<< (monede_introduse - monede) * 0.5 << " lei)" << endl;
+				}
+				if (monede_introduse < monede)
+				{
+					std::cout << "Va rugam mai introduceti " << monede - monede_introduse <<" "<<T2.getTip_bani()<<" : ";
+					std::cin >> diferenta_monede;
+				}
+			}
+			
+		}
 		if (pretul < cantitatea*livr.getPret())
 		{
 			std::cout << "Va rugam introduceti diferenta de " << cantitatea*livr.getPret() - pretul << " lei: ";
